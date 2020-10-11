@@ -1,0 +1,351 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<h1>{% block title %}Monitoring{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+<div class="monitoring-detail">
+    <div class="row mt-3 mb-3">
+        <div class="col-sm-6 system">
+            <div class="card bg-light">
+                <div class="card-header">
+                    <ion-icon name="pulse-outline"></ion-icon> System Details</a>
+                </div>
+                <div class="card-body">
+                    <table class="table detail-font system-table">
+                        <tbody>
+                            <tr>
+                                <td scope="row">System Time</td>
+                                <td class="time">{{ time }}</td>
+                            </tr>
+                            <tr>
+                                <td scope="row">Last Booted</td>
+                                <td class="boot_time">{{ system.boot_time }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 temperature">
+            <div class="card bg-light">
+                <div class="card-header">
+                    <ion-icon name="pulse-outline"></ion-icon> Temperature</a>
+                </div>
+                <div class="card-body">
+                    <div class="progress">
+                        <div class="progress-bar {% if temp > 60 %}bg-warning{%elif temp > 70%}bg-danger{%else%}bg-info{%endif%}"
+                            role="progressbar" style="width: {{ temp }}%;" aria-valuenow="{{ temp }}" aria-valuemin="0"
+                            aria-valuemax="75">{{ temp }}°c</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-sm-3 cpu">
+            <div class="card bg-light">
+                <div class="card-header">
+                    <ion-icon name="pulse-outline"></ion-icon> CPU Usage</a>
+                </div>
+                <div class="card-body">
+                    <table class="table detail-font cpu detail-table">
+                        <tbody>
+                            {% for cpuUsage in cpus.usage %}
+                            <tr>
+                                <td scope="row">Core {{ '%02d' % (loop.index)  }}</td>
+                                <td>
+                                    <div class="progress">
+                                        <div class="progress-bar core-{{ loop.index }}" role="progressbar"
+                                            style="width: {{ cpuUsage }}%;" aria-valuenow="{{ cpuUsage }}"
+                                            aria-valuemin="0" aria-valuemax="100">{{ cpuUsage }}%</div>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                            <tr>
+                                <td scope="row">Switches</td>
+                                <td class="ctx_switches">{{ memory.cpu_stats.ctx_switches | numberFormat }}</td>
+                            </tr>
+                            <tr>
+                                <td scope="row">Inter</td>
+                                <td class="interrupts">{{ memory.cpu_stats.interrupts | numberFormat }}</td>
+                            </tr>
+                            <tr>
+                                <td scope="row">Soft Inter</td>
+                                <td class="soft_interrupts">{{ memory.cpu_stats.soft_interrupts | numberFormat }}</td>
+                            </tr>
+                            <tr>
+                                <td scope="row">Syscalls</td>
+                                <td class="syscalls">{{ memory.cpu_stats.syscalls | numberFormat }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3 memory">
+            <div class="card bg-light">
+                <div class="card-header">
+                    <ion-icon name="pulse-outline"></ion-icon> Memory</a>
+                </div>
+                <div class="card-body">
+                    <table class="table detail-font detail-table">
+                        <tbody>
+                            <tr>
+                                <td scope="row">Percent</td>
+                                <td>
+                                    <div class="progress">
+                                        <div class="progress-bar" role="progressbar"
+                                            style="width: {{ memory.virtual_memory.percent }}%;"
+                                            aria-valuenow="{{ memory.virtual_memory.percent }}" aria-valuemin="0"
+                                            aria-valuemax="100">{{ memory.virtual_memory.percent }}%</div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td scope="row">Total</td>
+                                <td class="total">{{ memory.virtual_memory.total | filesizeformat }}</td>
+                            </tr>
+                            <tr>
+                                <td scope="row">Available</td>
+                                <td class="available">{{ memory.virtual_memory.available | filesizeformat }}</td>
+                            </tr>
+                            <tr>
+                                <td scope="row">Used</td>
+                                <td class="used">{{ memory.virtual_memory.used | filesizeformat }}</td>
+                            </tr>
+                            <tr>
+                                <td scope="row">Free</td>
+                                <td class="free">{{ memory.virtual_memory.free | filesizeformat }}</td>
+                            </tr>
+                            <tr>
+                                <td scope="row">Active</td>
+                                <td class="active">{{ memory.virtual_memory.active | filesizeformat }}</td>
+                            </tr>
+                            <tr>
+                                <td scope="row">Inactive</td>
+                                <td class="inactive">{{ memory.virtual_memory.inactive | filesizeformat }}</td>
+                            </tr>
+                            <tr>
+                                <td scope="row">Buffers</td>
+                                <td class="buffers">{{ memory.virtual_memory.buffers | filesizeformat }}</td>
+                            </tr>
+                            <tr>
+                                <td scope="row">Cached</td>
+                                <td class="cached">{{ memory.virtual_memory.cached | filesizeformat }}</td>
+                            </tr>
+                            <tr>
+                                <td scope="row">Shared</td>
+                                <td class="shared">{{ memory.virtual_memory.shared | filesizeformat }}</td>
+                            </tr>
+                            <tr>
+                                <td scope="row">Slab</td>
+                                <td class="slab">{{ memory.virtual_memory.slab | filesizeformat }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3 swap-memory">
+            <div class="card bg-light">
+                <div class="card-header">
+                    <ion-icon name="pulse-outline"></ion-icon> Swap Memory</a>
+                </div>
+                <div class="card-body">
+                    <table class="table detail-font sdetail-table">
+                        <tbody>
+                            <tr>
+                                <td scope="row">Percent</td>
+                                <td>
+                                    <div class="progress">
+                                        <div class="progress-bar" role="progressbar"
+                                            style="width: {{ memory.swap_memory.percent }}%;"
+                                            aria-valuenow="{{ memory.swap_memory.percent }}" aria-valuemin="0"
+                                            aria-valuemax="100">{{ memory.swap_memory.percent }}%</div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td scope="row">Total</td>
+                                <td class="total">{{ memory.swap_memory.total | filesizeformat }}</td>
+                            </tr>
+                            <tr>
+                                <td scope="row">Used</td>
+                                <td class="used">{{ memory.swap_memory.used | filesizeformat }}</td>
+                            </tr>
+                            <tr>
+                                <td scope="row">Free</td>
+                                <td class="free">{{ memory.swap_memory.free | filesizeformat }}</td>
+                            </tr>
+                            <tr>
+                                <td scope="row">Sin</td>
+                                <td class="sin">{{ memory.swap_memory.sin | filesizeformat }}</td>
+                            </tr>
+                            <tr>
+                                <td scope="row">Active</td>
+                                <td class="sout">{{ memory.swap_memory.sout | filesizeformat }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3 network">
+            <div class="card bg-light">
+                <div class="card-header">
+                    <ion-icon name="pulse-outline"></ion-icon> Network</a>
+                </div>
+                <div class="card-body">
+                    <table class="table detail-font sdetail-table">
+                        <tbody>
+                            <tr>
+                                <td scope="row">Sent</td>
+                                <td class="bytes_sent">{{ netio.bytes_sent | filesizeformat }}</td>
+                            </tr>
+                            <tr>
+                                <td scope="row">Received</td>
+                                <td class="bytes_recv">{{ netio.bytes_recv | filesizeformat }}</td>
+                            </tr>
+                            <tr>
+                                <td scope="row">Pkt Sent</td>
+                                <td class="packets_sent">{{ netio.packets_sent | numberFormat }}</td>
+                            </tr>
+                            <tr>
+                                <td scope="row">Pkt Recv</td>
+                                <td class="packets_recv">{{ netio.packets_recv | numberFormat }}</td>
+                            </tr>
+                            <tr>
+                                <td scope="row">Error In</td>
+                                <td class="errin">{{ netio.errin | numberFormat }}</td>
+                            </tr>
+                            <tr>
+                                <td scope="row">Error Out</td>
+                                <td class="errout">{{ netio.errout | numberFormat }}</td>
+                            </tr>
+                            <tr>
+                                <td scope="row">Drop In</td>
+                                <td class="dropin">{{ netio.dropin | numberFormat }}</td>
+                            </tr>
+                            <tr>
+                                <td scope="row">Drop Out</td>
+                                <td class="dropout">{{ netio.dropout | numberFormat }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12 drives">
+            <div class="card bg-light">
+                <div class="card-header">
+                    <ion-icon name="pulse-outline"></ion-icon> File System(s)</a>
+                </div>
+                <div class="card-body">
+                    <table class="table detail-font sdetail-table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Device</th>
+                                <th scope="col">Mount Point</th>
+                                <th scope="col">FileSystem Type</th>
+                                <th scope="col">Total Size</th>
+                                <th scope="col">Free</th>
+                                <th scope="col">Used</th>
+                                <th scope="col">Used %</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for df in fs %}
+                            <tr>
+                                <td scope="row" class="device">{{ df.device }} </td>
+                                <td scope="row" class="mountpoint">{{ df.mountpoint }} </td>
+                                <td scope="row" class="fstype">{{ df.fstype }} </td>
+                                <td scope="row" class="total">{{ df.total | filesizeformat }} </td>
+                                <td scope="row" class="free">{{ df.free | filesizeformat }} </td>
+                                <td scope="row" class="used_bytes">{{ df.used_bytes | filesizeformat }} </td>
+                                <td scope="row" class="used_percent">
+                                    <div class="progress">
+                                        <div class="progress-bar" role="progressbar"
+                                            style="width: {{ df.used_percent }}%;" aria-valuenow="{{ df.used_percent }}"
+                                            aria-valuemin="0" aria-valuemax="100">{{ df.used_percent }}%</div>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block script_content %}
+<script>
+    const formatBytes = function (bytes, decimals = 2) {
+        if (bytes === 0) return '0 Bytes';
+        const k = 1024;
+        const dm = decimals < 0 ? 0 : decimals;
+        const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+        const i = Math.floor(Math.log(bytes) / Math.log(k));
+        return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+    };
+    const updateSystem = function () {
+        $.ajax({
+            url: "/api/monitoring/system",
+            success: function (result) {
+                $(".system .time").html(result.time);
+                $(".system .boot_time").html(result.boot_time);
+            }
+        });
+    };
+    const updateCpuInfos = function () {
+        $.ajax({
+            url: "/api/monitoring/cpus",
+            success: function (result) {
+                result.usage.forEach((element, index) => {
+                    var $b = $(".progress-bar.core-" + (index + 1));
+                    $b.css('width', element + '%').html(element + '%');
+                });
+            }
+        });
+    };
+    const updateTemp = function () {
+        $.ajax({
+            url: "/api/monitoring/temp",
+            success: function (result) {
+                var $b = $(".temperature .progress-bar");
+                $b.css('width', result + '%').html(result + '%');
+            }
+        });
+    };
+    const updateNetwork = function () {
+        $.ajax({
+            url: "/api/monitoring/network",
+            success: function (result) {
+                $(".network .bytes_recv").html(formatBytes(result.bytes_recv));
+                $(".network .bytes_sent").html(formatBytes(result.bytes_sent));
+                $(".network .dropin").html(result.dropin.toLocaleString());
+                $(".network .dropout").html(result.dropout.toLocaleString());
+                $(".network .errin").html(result.errin.toLocaleString());
+                $(".network .errout").html(result.errout.toLocaleString());
+                $(".network .packets_recv").html(result.packets_recv.toLocaleString());
+                $(".network .packets_sent").html(result.packets_sent.toLocaleString());
+            }
+        });
+    };
+    $(function () {
+        setInterval(function () {
+            updateCpuInfos();
+            updateNetwork();
+            updateTemp();
+            updateSystem();
+        }, 60000);
+    });
+</script>
+{% endblock %}

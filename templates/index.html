@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Index{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+   <div class="row m-5">
+      <div class="col-sm-4">
+         <div class="card bg-light">
+            <div class="card-header">
+               <a href="/monitoring" >
+                  <ion-icon name="analytics-outline"></ion-icon> Monitoring</a>
+               </a>                     
+            </div>
+            <div class="card-body">
+               <p class="card-text">Monitor your system resources.</p>
+            </div>
+         </div>
+      </div>
+      <div class="col-sm-4">
+         <div class="card bg-light">
+            <div class="card-header">
+               <a href="/configuration" >                  
+                  <ion-icon name="settings-outline"></ion-icon> Configuration
+               </a>                  
+            </div>
+            <div class="card-body">
+               <p class="card-text">Change system configurations.</p>
+            </div>
+         </div>
+      </div>
+      <div class="col-sm-4">
+         <div class="card bg-light">
+            <div class="card-header">
+               <a href="/bios" >               
+                  <ion-icon name="cloud-upload-outline"></ion-icon> BIOS
+               </a>                  
+            </div>
+            <div class="card-body">
+               <p class="card-text">Mange all supported BIOS files.</p>
+            </div>
+         </div>
+      </div>
+   </div>
+   <div class="row m-5">
+      <div class="col-sm-4">
+         <div class="card bg-light">
+            <div class="card-header">
+               <a href="/roms" >                  
+                  <ion-icon name="save-outline"></ion-icon> ROMS
+               </a>                  
+            </div>
+            <div class="card-body">
+               <p class="card-text">Manage ROMS for emulated systems.</p>
+            </div>
+         </div>
+      </div>
+      <div class="col-sm-4">
+         <div class="card bg-light">
+            <div class="card-header">
+               <a href="/logs" >                  
+                  <ion-icon name="book-outline"></ion-icon> Logs
+               </a>                  
+            </div>
+            <div class="card-body">
+               <p class="card-text">View log files.</p>
+            </div>
+         </div>
+      </div>
+   </div>
+{% endblock %}   

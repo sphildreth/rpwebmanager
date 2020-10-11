@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+   <title>{% block title %}{% endblock %} - RetroPie Web Manager</title>
+   <script type="module" src="https://unpkg.com/ionicons@5.1.2/dist/ionicons/ionicons.esm.js"></script>
+   <script nomodule="" src="https://unpkg.com/ionicons@5.1.2/dist/ionicons/ionicons.js"></script>
+   <style>
+      html,
+      body {
+         height: 100%;
+      }
+
+      #page-content {
+         flex: 1 0 auto;
+      }
+
+      #sticky-footer {
+         flex-shrink: none;
+      }
+
+      .detail-font {
+         font-size: 1.2em;
+         font-family: monospace !important;
+      }
+
+      .monitoring-detail .progress {
+         height: 22px;
+      }
+
+      .monitoring-detail .detail-row .badge {
+         height: 22px;
+      }
+
+      .detail-table thead tr th:first-child,
+      .detail-table tbody tr td:first-child {
+         width: 7em;
+         min-width: 7em;
+         max-width: 7em;
+         word-break: break-all;
+      }
+   </style>
+</head>
+
+<body class="d-flex flex-column">
+   <div id="page-content">
+      <div class="container-fluid">
+         <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+            <a class="navbar-brand" href="/">
+               <img src="static/img/logo.png" alt="rpWM Logo" height="40" class="d-inline-block align-top" alt=""
+                  loading="lazy">
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+               aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+               <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+               <div class="navbar-nav">
+                  <a class="nav-link {% if request.path == '/' %}active{% endif %}" href="/">Index <span class="sr-only">(current)</span></a>
+                  <a class="nav-link {% if request.path == '/monitoring' %}active{% endif %}" href="monitoring">Monitoring</a>
+                  <a class="nav-link {% if request.path == '/configuration' %}active{% endif %}" href="configuration">Configuration</a>
+                  <a class="nav-link {% if request.path == '/bios' %}active{% endif %}" href="bios">BIOS</a>
+                  <a class="nav-link {% if request.path == '/roms' %}active{% endif %}" href="roms">ROMS</a>
+                  <a class="nav-link {% if request.path == '/logs' %}active{% endif %}" href="logs">Logs</a>
+               </div>
+            </div>
+         </nav>
+         {% block content %}{% endblock %}
+      </div>
+   </div>
+   <footer id="sticky-footer" class="py-2 bg-dark text-white-50">
+      <div class="container text-center">
+         <small>Retropie Web Manager (rpWebMan) v1.0.0</small>
+      </div>
+   </footer>
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+      integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+      crossorigin="anonymous"></script>
+   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+      integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+      crossorigin="anonymous"></script>
+
+      {% block script_content %}{% endblock %}
+</body>
+
+</html>
