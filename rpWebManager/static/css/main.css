@@ -1,0 +1,33 @@
+html,
+body {
+   height: 100%;
+}
+
+#page-content {
+   flex: 1 0 auto;
+}
+
+#sticky-footer {
+   flex-shrink: none;
+}
+
+.detail-font {
+   font-size: 1.2em;
+   font-family: monospace !important;
+}
+
+.monitoring-detail .progress {
+   height: 22px;
+}
+
+.monitoring-detail .detail-row .badge {
+   height: 22px;
+}
+
+.detail-table thead tr th:first-child,
+.detail-table tbody tr td:first-child {
+   width: 7em;
+   min-width: 7em;
+   max-width: 7em;
+   word-break: break-all;
+}

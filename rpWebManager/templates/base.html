@@ -6,43 +6,12 @@
    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
       integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+   <link href="{{ url_for('static', filename='css/main.css') }}" rel="stylesheet">      
    <title>{% block title %}{% endblock %} - RetroPie Web Manager</title>
    <script type="module" src="https://unpkg.com/ionicons@5.1.2/dist/ionicons/ionicons.esm.js"></script>
    <script nomodule="" src="https://unpkg.com/ionicons@5.1.2/dist/ionicons/ionicons.js"></script>
    <style>
-      html,
-      body {
-         height: 100%;
-      }
 
-      #page-content {
-         flex: 1 0 auto;
-      }
-
-      #sticky-footer {
-         flex-shrink: none;
-      }
-
-      .detail-font {
-         font-size: 1.2em;
-         font-family: monospace !important;
-      }
-
-      .monitoring-detail .progress {
-         height: 22px;
-      }
-
-      .monitoring-detail .detail-row .badge {
-         height: 22px;
-      }
-
-      .detail-table thead tr th:first-child,
-      .detail-table tbody tr td:first-child {
-         width: 7em;
-         min-width: 7em;
-         max-width: 7em;
-         word-break: break-all;
-      }
    </style>
 </head>
 
